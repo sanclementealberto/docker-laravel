@@ -24,6 +24,7 @@ services:
       - ./src:/var/www/html
     ports:
       - "80:80"
+      - "2222:22"
     depends_on:
       - db
     environment:
