@@ -16,9 +16,9 @@ RUN docker-php-ext-install pdo_mysql
 RUN a2enmod rewrite
 
 # Instalar Xdebug
-RUN pecl install xdebug-3.3.2 \
-    && docker-php-ext-enable xdebug \
-    
+RUN pecl install xdebug-3.3.2
+RUN docker-php-ext-enable xdebug
+
 ADD xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Instalar Composer

@@ -12,7 +12,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     networks:
-        - default
+      - default
   
   app:
     build:
@@ -32,6 +32,10 @@ services:
       - DB_DATABASE=laravel
       - DB_USERNAME=laravel
       - DB_PASSWORD=devtest
+    networks:
+      - default
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   
   phpmyadmin:
     image: phpmyadmin:5.2.1
