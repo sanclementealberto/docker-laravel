@@ -1,93 +1,155 @@
-# laravel-docker
+# Laravel dockerizado
 
+![laravel-docker](img/laravel-docker.png)
 
+Este proyecto permite desplegar a traves de contenedores docker los servicios necesarios para desplegar una aplicación con Laravel.
 
-## Getting started
+---
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## 1. Requisitos previos
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- Tener instalados:
+  - Docker
+  - Docker Compose
+  - Git
+- Conexión a Internet para descargar las imágenes y dependencias.
 
-## Add your files
+---
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## 2. Configuración de acceso SSH
 
+Para que funcione correctamente la conexión SSH con el servicio app_laravel, crea una clave ssh.
+
+```bash
+ssh-keygen -t rsa -b 4096 -C "tu_correo@example.com"
 ```
-cd existing_repo
-git remote add origin https://gitlab.iessanclemente.net/marco/laravel-docker.git
-git branch -M main
-git push -uf origin main
+
+Esto generará dos archivos:
+
+   - ~/.ssh/id_rsa (clave privada)
+   - ~/.ssh/id_rsa.pub (clave pública)
+
+Y copia la pública id_rsa.pub a la raíz del proyecto.
+
+```bash
+cp ~/.ssh/id_rsa.pub ./id_rsa.pub
 ```
 
-## Integrate with your tools
+Es recomendable eliminarla una vez se haya copiado al contenedor, aunque esto implicaría volver a copiarla si se quisieran regenerar los servicios.
 
-- [ ] [Set up project integrations](https://gitlab.iessanclemente.net/marco/laravel-docker/-/settings/integrations)
+Para conectarnos desde el anfitrión, simplemente tendremo que hacerlo con ssh:
 
-## Collaborate with your team
+```bash
+ssh -i ~/.ssh/id_rsa laravel@localhost -p 2222
+```
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+En caso de regenerar los contenedores, es posible que detecte el cambio y por seguridad no nos deje conectar. Para solucionarlo, solo hay que borrar el host de los ya conocidos:
 
-## Test and Deploy
+```bash
+ssh-keygen -f '/home/ladmin/.ssh/known_hosts' -R '[localhost]:2222'
+```
 
-Use the built-in continuous integration in GitLab.
+---
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## 3. Construir y levantar los servicios
 
-***
+Ejecuta los siguientes comandos para construir y levantar los servicios:
 
-# Editing this README
+```bash
+docker compose build
+docker compose up -d
+```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Verifica que los contenedores están corriendo:
 
-## Suggestions for a good README
+```bash
+docker ps
+```
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+---
 
-## Name
-Choose a self-explaining name for your project.
+## 4. Instalación de Laravel
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+### Creación de proyecto
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+1. Accede al contenedor de la aplicación:
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+```bash
+ssh -i ~/.ssh/id_rsa laravel@localhost -p 2222
+```
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+2. Instala Laravel usando Composer:
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+```bash
+composer create-project --prefer-dist laravel/laravel . "^11.0"
+```
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+No es necesario crear la base de datos SQLite. Editaremos la configuración más adelante.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+### Configuración Apache y permisos
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+Edita el fichero `/etc/apache2/sites-available/000-default.conf` para que apunte a la carpeta pública de laravel.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+```xml
+<VirtualHost *:80>
+    DocumentRoot /var/www/html/public
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+    <Directory /var/www/html/public>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
 
-## License
-For open source projects, say how it is licensed.
+Sal del contenedor y renicia los servicios:
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+```bash
+docker compose down
+docker compose up -d
+```
+
+Establece los permisos adecuados:
+
+
+*** TODO !!!!!!!!!!!!!! ***
+
+```bash
+sudo chmod -R 775 src/storage src/bootstrap/cache
+sudo chmod -R 775 src ¿?¿?¿?¿?
+sudo chown -R $USER:www-data src
+```
+
+### Configuración de variables de entorno
+
+La instalación crea un archivo `.env` en src. Debemos cambiar la configuración a nuestro gusto. Lo más importante es indicar la conexión con la base de datos.
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=laravel
+DB_PASSWORD=devtest
+```
+
+---
+
+### Finalizar la instalación
+
+Para usar `php artisan`, accede al contenedor:
+
+```bash
+ssh -i ~/.ssh/id_rsa laravel@localhost -p 2222
+```
+
+Y ejecuta los siguientes pasos para finalizar la instalación:
+
+```bash
+php artisan migrate
+php artisan key:generate
+```
+
+Accede a `http://localhost` para comprobar que puedes visualizar correctamente la página inicial de Laravel.
+
