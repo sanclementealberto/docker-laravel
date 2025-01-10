@@ -81,15 +81,21 @@ ssh -i ~/.ssh/id_rsa laravel@localhost -p 2222
 2. Instala Laravel usando Composer:
 
 ```bash
+cd /var/www/html/
 composer create-project --prefer-dist laravel/laravel . "^11.0"
 ```
 
 No es necesario crear la base de datos SQLite. Editaremos la configuración más adelante.
 
-
 ### Configuración Apache y permisos
 
-Edita el fichero `/etc/apache2/sites-available/000-default.conf` para que apunte a la carpeta pública de laravel.
+Accede al contenedor de la aplicación:
+
+```bash
+ssh -i ~/.ssh/id_rsa laravel@localhost -p 2222
+```
+
+Y edita el fichero `/etc/apache2/sites-available/000-default.conf` para que apunte a la carpeta pública de laravel.
 
 ```xml
 <VirtualHost *:80>
@@ -112,18 +118,14 @@ docker compose up -d
 
 Establece los permisos adecuados:
 
-
-*** TODO !!!!!!!!!!!!!! ***
-
 ```bash
-sudo chmod -R 775 src/storage src/bootstrap/cache
-sudo chmod -R 775 src ¿?¿?¿?¿?
-sudo chown -R $USER:www-data src
+sudo chmod -R 770 src
+sudo chown -R www-data:$USER src
 ```
 
 ### Configuración de variables de entorno
 
-La instalación crea un archivo `.env` en src. Debemos cambiar la configuración a nuestro gusto. Lo más importante es indicar la conexión con la base de datos.
+La instalación cre un archivo `.env` en src. Debemos cambiar la configuración a nuestro gusto. Lo más importante es indicar la conexión con la base de datos.
 
 ```env
 DB_CONNECTION=mysql
@@ -133,8 +135,6 @@ DB_DATABASE=laravel
 DB_USERNAME=laravel
 DB_PASSWORD=devtest
 ```
-
----
 
 ### Finalizar la instalación
 
@@ -152,4 +152,3 @@ php artisan key:generate
 ```
 
 Accede a `http://localhost` para comprobar que puedes visualizar correctamente la página inicial de Laravel.
-
