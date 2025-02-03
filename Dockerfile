@@ -19,12 +19,21 @@ RUN docker-php-ext-install pdo_mysql
 RUN chown www-data:www-data /var/www/html
 
 RUN a2enmod rewrite
+RUN a2enmod ssl
+#&& apache2-foreground && service apache2 restart
 
 # Instalar Xdebug
 RUN pecl install xdebug-3.3.2
 RUN docker-php-ext-enable xdebug
 
 ADD xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
+# Configurar ServerName para Apache
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Copiar certificados SSL
+COPY certs/apache-selfsigned.crt /etc/ssl/certs/
+COPY certs/apache-selfsigned.key /etc/ssl/private/
 
 # Instalar Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer

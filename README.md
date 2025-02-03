@@ -12,6 +12,7 @@ Este proyecto permite desplegar a traves de contenedores docker los servicios ne
   - Docker
   - Docker Compose
   - Git
+  - Certificados SSL
 - Conexión a Internet para descargar las imágenes y dependencias.
 
 ---
@@ -51,7 +52,18 @@ ssh-keygen -f '/home/uadmin/.ssh/known_hosts' -R '[localhost]:2222'
 
 ---
 
-## 3. Construir y levantar los servicios
+## 3. Certificados SSL
+
+Los certificados SSL deben ubicarse en la carpeta `cert` del proyecto. Puedes usar OpenSSL para generar un certificado autofirmado.
+
+```bash
+mkdir -p certs
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout certs/apache-selfsigned.key -out certs/apache-selfsigned.crt
+```
+
+Para un entorno de producción, deberías obtener un certificado SSL de una autoridad de certificación (CA) confiable, como Let's Encrypt.
+
+## 4. Construir y levantar los servicios
 
 Crea en la raíz de tu proyecto la carpete `src` para sincronizar con el código de Laravel del contenedor.
 
@@ -76,7 +88,7 @@ docker ps
 
 ---
 
-## 4. Instalación de Laravel
+## 5. Instalación de Laravel
 
 ### Creación de proyecto
 
@@ -164,3 +176,10 @@ php artisan key:generate
 ```
 
 Accede a `http://localhost` para comprobar que puedes visualizar correctamente la página inicial de Laravel.
+
+## 6. Limitaciones
+
+### Xdebug
+
+Las vistas Blade en Laravel son compiladas en archivos PHP antes de ser servidas, lo que puede hacer que la depuración directa en los archivos .blade.php no funcione como se espera. Sin embargo, puedes depurar el código PHP en las vistas Blade utilizando los archivos PHP que se almacenan en el directorio storage/framework/views. Puedes encontrar el archivo compilado correspondiente a tu vista y colocar puntos de interrupción allí. Sin embargo, esta no es la forma más práctica de depurar.
+

@@ -25,15 +25,18 @@ services:
       - ./my-custom-000-default.conf:/etc/apache2/sites-available/000-default.conf
     ports:
       - "80:80"
+      - "443:443"
       - "2222:22"
     depends_on:
       - db
     environment:
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_DATABASE=laravel
-      - DB_USERNAME=laravel
-      - DB_PASSWORD=devtest
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: laravel
+      DB_USERNAME: laravel
+      DB_PASSWORD: devtest
+      XDEBUG_MODE: debug
+      XDEBUG_CONFIG: client_host=host.docker.internal client_port=9003
     networks:
       - default
     extra_hosts:
