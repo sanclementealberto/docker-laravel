@@ -46,12 +46,18 @@ ssh -i ~/.ssh/id_rsa laravel@localhost -p 2222
 En caso de regenerar los contenedores, es posible que detecte el cambio y por seguridad no nos deje conectar. Para solucionarlo, solo hay que borrar el host de los ya conocidos:
 
 ```bash
-ssh-keygen -f '/home/ladmin/.ssh/known_hosts' -R '[localhost]:2222'
+ssh-keygen -f '/home/uadmin/.ssh/known_hosts' -R '[localhost]:2222'
 ```
 
 ---
 
 ## 3. Construir y levantar los servicios
+
+Crea en la raíz de tu proyecto la carpete `src` para sincronizar con el código de Laravel del contenedor.
+
+```bash
+mkdir src
+```
 
 Ejecuta los siguientes comandos para construir y levantar los servicios:
 
@@ -59,6 +65,8 @@ Ejecuta los siguientes comandos para construir y levantar los servicios:
 docker compose build
 docker compose up -d
 ```
+
+Al crear la imagen del contenedor de Laravel, se crea un usuario `laravel:devTest-.,` con el que conectarse por ssh y dentro del grupo sudo.
 
 Verifica que los contenedores están corriendo:
 
@@ -99,6 +107,7 @@ Y edita el fichero `/etc/apache2/sites-available/000-default.conf` para que apun
 
 ```xml
 <VirtualHost *:80>
+    ServerAdmin webmaster@localhost
     DocumentRoot /var/www/html/public
 
     <Directory /var/www/html/public>
@@ -106,6 +115,9 @@ Y edita el fichero `/etc/apache2/sites-available/000-default.conf` para que apun
         AllowOverride All
         Require all granted
     </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 ```
 
