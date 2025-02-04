@@ -109,13 +109,7 @@ No es necesario crear la base de datos SQLite. Editaremos la configuración más
 
 ### Configuración Apache y permisos
 
-Accede al contenedor de la aplicación:
-
-```bash
-ssh -i ~/.ssh/id_rsa laravel@localhost -p 2222
-```
-
-Y edita el fichero `/etc/apache2/sites-available/000-default.conf` para que apunte a la carpeta pública de laravel.
+Verifica que está correctamente configurado Apache para apuntar a la carpeta pública de Laravel. Fichero `/etc/apache2/sites-available/000-default.conf`:
 
 ```xml
 <VirtualHost *:80>
@@ -131,13 +125,24 @@ Y edita el fichero `/etc/apache2/sites-available/000-default.conf` para que apun
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
-```
 
-Sal del contenedor y renicia los servicios:
+<VirtualHost *:443>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html/public
 
-```bash
-docker compose down
-docker compose up -d
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/certs/apache-selfsigned.crt
+    SSLCertificateKeyFile /etc/ssl/private/apache-selfsigned.key
+
+    <Directory /var/www/html/public>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
 ```
 
 Establece los permisos adecuados:
