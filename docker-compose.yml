@@ -9,6 +9,7 @@ services:
       MYSQL_DATABASE: laravel
       MYSQL_USER: laravel
       MYSQL_PASSWORD: devtest
+      TZ: Europe/Madrid
     volumes:
       - db_data:/var/lib/mysql
     networks:
@@ -37,6 +38,7 @@ services:
       DB_PASSWORD: devtest
       XDEBUG_MODE: debug
       XDEBUG_CONFIG: client_host=host.docker.internal client_port=9003
+      TZ: Europe/Madrid
     networks:
       - default
     extra_hosts:
@@ -54,6 +56,7 @@ services:
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
+      TZ: Europe/Madrid
 
 volumes:
   db_data:
