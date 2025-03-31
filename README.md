@@ -86,12 +86,6 @@ Verifica que los contenedores están corriendo:
 docker ps
 ```
 
-Es posible que si no tienes suficientes permisos en tu equipo anfitrión, tengas que adaptar lo anterior a tu entorno. Para un entorno de pruebas, puedes asignar permisos totales sobre la carpeta:
-
-```bash
-chmod -R 777 src
-```
-
 ---
 
 ## 5. Instalación de Laravel
@@ -156,6 +150,12 @@ Establece los permisos adecuados:
 ```bash
 sudo chmod -R 770 src
 sudo chown -R www-data:$USER src
+```
+
+Es posible que si no tienes suficientes permisos en tu equipo anfitrión, tengas que adaptar lo anterior a tu entorno. Para un entorno de pruebas, puedes asignar permisos totales sobre la carpeta:
+
+```bash
+chmod -R 777 src
 ```
 
 ### Configuración de variables de entorno
