@@ -47,7 +47,7 @@ ssh -i ~/.ssh/id_rsa laravel@localhost -p 2222
 En caso de regenerar los contenedores, es posible que detecte el cambio y por seguridad no nos deje conectar. Para solucionarlo, solo hay que borrar el host de los ya conocidos:
 
 ```bash
-ssh-keygen -f '/home/uadmin/.ssh/known_hosts' -R '[localhost]:2222'
+ssh-keygen -f ~/.ssh/known_hosts -R '[localhost]:2222'
 ```
 
 ---
@@ -84,6 +84,12 @@ Verifica que los contenedores están corriendo:
 
 ```bash
 docker ps
+```
+
+Es posible que si no tienes suficientes permisos en tu equipo anfitrión, tengas que adaptar lo anterior a tu entorno. Para un entorno de pruebas, puedes asignar permisos totales sobre la carpeta:
+
+```bash
+chmod -R 777 src
 ```
 
 ---
