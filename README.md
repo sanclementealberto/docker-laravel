@@ -78,7 +78,7 @@ sudo chmod -R 770 src
 sudo chown -R www-data:$USER src
 ```
 
-Es posible que si no tienes suficientes permisos en tu equipo anfitrión, tengas que adaptar lo anterior a tu entorno. Para un entorno de pruebas, puedes asignar permisos totales sobre la carpeta:
+Es posible que si no tienes suficientes permisos en tu equipo anfitrión, tengas que adaptar lo anterior a tu entorno. Para un entorno de pruebas, puedes asignar permisos totales sobre la carpeta. Podrías necesitar volver a hacerlo después de la instalación.
 
 ```bash
 chmod -R 777 src
@@ -160,7 +160,7 @@ Verifica que está correctamente configurado Apache para apuntar a la carpeta p�
 
 ### Configuración de variables de entorno
 
-La instalación cre un archivo `.env` en src. Debemos cambiar la configuración a nuestro gusto. Lo más importante es indicar la conexión con la base de datos.
+La instalación crea un archivo `.env` en src. Debemos cambiar la configuración a nuestro gusto. Lo más importante es indicar la conexión con la base de datos.
 
 ```env
 DB_CONNECTION=mysql
@@ -182,11 +182,12 @@ ssh -i ~/.ssh/id_rsa laravel@localhost -p 2222
 Y ejecuta los siguientes pasos para finalizar la instalación:
 
 ```bash
+cd /var/www/html
 php artisan migrate
 php artisan key:generate
 ```
 
-Accede a `http://localhost` para comprobar que puedes visualizar correctamente la página inicial de Laravel.
+Accede a `http://localhost` y `https://localhost` para comprobar que puedes visualizar correctamente la página inicial de Laravel.
 
 ## 6. Limitaciones
 
