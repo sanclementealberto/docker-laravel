@@ -71,6 +71,19 @@ Crea en la raíz de tu proyecto la carpete `src` para sincronizar con el código
 mkdir src
 ```
 
+Establece los permisos adecuados:
+
+```bash
+sudo chmod -R 770 src
+sudo chown -R www-data:$USER src
+```
+
+Es posible que si no tienes suficientes permisos en tu equipo anfitrión, tengas que adaptar lo anterior a tu entorno. Para un entorno de pruebas, puedes asignar permisos totales sobre la carpeta:
+
+```bash
+chmod -R 777 src
+```
+
 Ejecuta los siguientes comandos para construir y levantar los servicios:
 
 ```bash
@@ -143,19 +156,6 @@ Verifica que está correctamente configurado Apache para apuntar a la carpeta p�
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
-```
-
-Establece los permisos adecuados:
-
-```bash
-sudo chmod -R 770 src
-sudo chown -R www-data:$USER src
-```
-
-Es posible que si no tienes suficientes permisos en tu equipo anfitrión, tengas que adaptar lo anterior a tu entorno. Para un entorno de pruebas, puedes asignar permisos totales sobre la carpeta:
-
-```bash
-chmod -R 777 src
 ```
 
 ### Configuración de variables de entorno
