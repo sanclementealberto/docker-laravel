@@ -38,6 +38,12 @@ COPY certs/apache-selfsigned.key /etc/ssl/private/
 # Instalar Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# Instalar Node.js y npm (última versión LTS)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g npm@latest && \
+    npm install -g vite@latest
+
 # Instalar OpenSSH Server
 RUN apt-get install -y openssh-server && \
     mkdir /var/run/sshd
