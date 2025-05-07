@@ -6,9 +6,9 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: test
-      MYSQL_DATABASE: laravel
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: devtest
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
       TZ: Europe/Madrid
     volumes:
       - db_data:/var/lib/mysql
