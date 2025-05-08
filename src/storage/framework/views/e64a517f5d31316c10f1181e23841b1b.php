@@ -273,7 +273,7 @@
 
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="<?php echo e(route('login')); ?>">
-                <?php echo e(__('Already registered?')); ?>
+                <?php echo e(__('Estas registrado?')); ?>
 
             </a>
 
@@ -287,7 +287,7 @@
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['class' => 'ms-4']); ?>
-                <?php echo e(__('Register')); ?>
+                <?php echo e(__('Registrarse')); ?>
 
              <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>

@@ -191,7 +191,7 @@
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['class' => 'ms-3']); ?>
-                <?php echo e(__('Log in')); ?>
+                <?php echo e(__('Entrar')); ?>
 
              <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
