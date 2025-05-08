@@ -15,6 +15,19 @@
                 {{ session('error') }}
             </div>
         @endif
+        <!-- solo el taller puede filtrar -->
+        @if (auth()->user()->role === 'taller')
+
+
+            <form method="GET" action="{{ route('citas.filtrar') }}">
+                <label for="estado">Estado:</label>
+                <select name="estado" id="estado" onchange="this.form.submit()">
+                    <option value=""> Todas </option>
+                    <option value="sincita" {{ request('estado') == 'sincita' ? 'selected' : '' }}>Sin cita</option>
+                    <option value="concita" {{ request('estado') == 'concita' ? 'selected' : '' }}>Con cita</option>
+                </select>
+            </form>
+        @endif
         <table class="table mt-2 ">
             <thead class="">
                 <tr>
@@ -33,9 +46,10 @@
                 </tr>
             </thead>
             <tbody>
+              
                 @if ($citas->isEmpty())
                     <tr>
-                        <td colspan="8">No hay citas</td>
+                        <td class="text-center" colspan="8">No hay citas</td>
                     </tr>
                 @else
                     @foreach ($citas as $cita)
@@ -44,9 +58,12 @@
                             <td>{{ $cita->user->name }}</td>
                             <td>{{ $cita->modelo }}</td>
                             <td>{{ $cita->matricula }}</td>
+
+
                             <td>{{ $cita->fecha }}</td>
                             <td>{{ $cita->hora }}</td>
                             <td>{{ $cita->duracion }}</td>
+
                             <td>
                                 <!--  //ademas oculto la vista para el rol cliente en html-->
                                 @if(auth()->user()->role === 'taller')

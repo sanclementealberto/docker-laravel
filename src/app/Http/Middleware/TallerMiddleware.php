@@ -20,7 +20,7 @@ class TallerMiddleware
         if (Auth::check() && Auth::user()->role === 'taller') {
             return $next($request);
         }
-        return redirect()->route('index')->with('error', 'Solo los clientes pueden crear citas');
+        return redirect()->route('index')->with('error', 'solo el taller  puede modificar citas');
         
     }
 }

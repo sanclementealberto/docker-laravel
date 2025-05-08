@@ -31,9 +31,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('/users', UserController::class)->middleware(TallerMiddleware::class);
 });
+   
+   
 
 //solo permisos de taller
 Route::middleware(['auth', TallerMiddleware::class])->group(function () {
+
+    //cuidado con repetir rutas tuveu n problema cuando filte use la misma ruta para obtener nas citas que para filtrar que fue /citas
+   //filtrar
+   Route::get('/citas/filtrar', [CitaController::class, 'filtrar'])->name('citas.filtrar');
+
     // ruta actualizar update
     Route::get('/citas/{id}', [CitaController::class, 'edit'])
         ->name('citas.modificar-cita');

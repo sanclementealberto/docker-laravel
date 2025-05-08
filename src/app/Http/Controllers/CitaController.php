@@ -27,6 +27,30 @@ class CitaController extends Controller
       return view('citas.show', compact('citas'));
    }
 
+   public function filtrar(Request $request){
+      //OBTENgo el estado del select
+      $estado = $request->input('estado');
+
+      //carga los datos de las citas y los datos relacionados de los usuarios con esas citas
+      $query = Cita::with('user');
+  
+      if ($estado === 'sincita') {
+          $query->whereNull('fecha')
+                ->whereNull('hora')
+                ->whereNull('duracion');
+      } elseif ($estado === 'concita') {
+          $query->whereNotNull('fecha')
+                ->whereNotNull('hora')
+                ->whereNotNull('duracion');
+      }
+  
+      //obtengo los datos
+      $citas = $query->get();
+      
+      //paso las citas y el estado
+      return view('citas.show', compact('citas','estado'));
+   }
+
 
    /**
     * vista para crear citas
@@ -39,6 +63,7 @@ class CitaController extends Controller
       return view('citas.nueva-cita');
 
    }
+
 
 
    //las guardo

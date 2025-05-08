@@ -22,7 +22,7 @@ class ClienteMiddleware
             return $next($request);
         }
       
-        return redirect()->route('index')->with('error', 'Solo el taller pueden modificar las citas');
+        return redirect()->route('index')->with('error', 'solo los clientes pueden crear las citas');
         
     }
 }

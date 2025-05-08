@@ -42,9 +42,9 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+        //esto inicia la session automaticamente
+        //Auth::login($user);
 
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('login', absolute: false));
     }
 }

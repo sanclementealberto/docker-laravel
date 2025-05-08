@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
 
 
 
-        //ES SOLO Un jemplo para ver como queda con fecha,hora y duracion    
+        //ES SOLO Un ejemplo para ver como queda con fecha,hora y duracion    
         Cita::factory()->create([
             'user_id' => $cliente->id,
             'marca' => 'Toyota',
@@ -50,15 +50,15 @@ class DatabaseSeeder extends Seeder
             'hora' => now()->addDays(3)->format('H:i:s'),
             'duracion' => '01:00:00',
         ]);
-
+        //pongo los valores a null ya que en controlador tuve un problema y los ponia la condicion por empty y no por null
         Cita::factory()->create([
             'user_id' => $cliente->id,
             'marca' => 'citroen',
             'modelo' => 'xsara',
             'matricula' => '1214ABC',
-            'fecha' => '',
-            'hora' => '',
-            'duracion' => '',
+            'fecha' => null,
+            'hora' => null,
+            'duracion' => null,
         ]);
 
         Cita::factory()->create([
@@ -66,9 +66,9 @@ class DatabaseSeeder extends Seeder
             'marca' => 'citroen',
             'modelo' => 'pcasi',
             'matricula' => '1514ABC',
-            'fecha' => '',
-            'hora' => '',
-            'duracion' => '',
+            'fecha' =>null,
+            'hora' => null,
+            'duracion' => null,
         ]);
 
     }
