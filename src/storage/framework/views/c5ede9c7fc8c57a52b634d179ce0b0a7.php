@@ -15,7 +15,7 @@
                     <?php echo e(__("Bienvenido " . Auth::user()->name)); ?>
 
                     <?php if(session('error')): ?>
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger w-28">
                             <?php echo e(session('error')); ?>
 
                         </div>

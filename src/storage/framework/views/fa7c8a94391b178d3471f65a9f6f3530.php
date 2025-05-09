@@ -10,7 +10,7 @@
 <?php $component->withAttributes([]); ?>
 
 <div class="container mx-auto mt-2">
-    <h2>Nueva Cita</h2>
+    <h2 class="alert alert-info w-8">Nueva Cita</h2>
 
 </div>
 
@@ -84,7 +84,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
                      
-                        <button type="submit" class="btn btn-outline-primary px-4 py-2 rounded-md">
+                        <button type="submit" class="btn btn-primary px-4 py-2 rounded-md">
                             <?php echo e(__('Guardar')); ?>
 
                         </button>

@@ -176,7 +176,7 @@
             <?php if(Route::has('password.request')): ?>
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     href="<?php echo e(route('password.request')); ?>">
-                    <?php echo e(__('Forgot your password?')); ?>
+                    <?php echo e(__('has olvidado tu contraseña?')); ?>
 
                 </a>
             <?php endif; ?>

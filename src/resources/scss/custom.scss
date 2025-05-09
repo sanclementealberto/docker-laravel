@@ -1,11 +1,23 @@
-$primary: #004085 !default; // Permite sobreescribir variables si ya están definidas
+$primary: #16d236 !default; // Permite sobreescribir variables si ya están definidas
 $secondary: #6c757d !default;
 $success: #28a745 !default;
-$info: #17a2b8 !default;
-$warning: #ffc107 !default;
-$danger: #dc3545 !default;
+$info: #3adff8 !default;
+$warning: #e5e4e1 !default;
 $light: #f8f9fa !default;
 $dark: #343a40 !default;
+$danger: rgb(65, 0, 0) !default; 
+
+//tabla ejecutar script npm run build para actualizar los cambios
+//que es este script  "scripts": {
+  //      "build": "vite build",
+$table-bg: #ffffff !default;
+$table-accent-bg: #f2f2f2 !default;
+$table-hover-bg: #47f13e !default;
+$table-border-color: #101112 !default;
+$table-color: #212529 !default;
+$table-border-color: #0f1011 !default;
+$table-border-width: 2px !default;
+
 
 // Usa Bootstrap con @use
 @use "bootstrap" with (
@@ -14,7 +26,30 @@ $dark: #343a40 !default;
     $success: $success,
     $info: $info,
     $warning: $warning,
-    $danger: $danger,
     $light: $light,
-    $dark: $dark
+    $dark: $dark,
+    $danger: $danger,
+    
+    //tabla
+    $table-bg: $table-bg,
+    $table-accent-bg: $table-accent-bg,
+    $table-hover-bg: $table-hover-bg,
+    $table-border-color: $table-border-color,
+    $table-color: $table-color,
+    $table-border-width: $table-border-width,
+
+    
+
 );
+
+.w-8{
+  width:8% !important;
+}
+
+.w-15{
+  width: 15% !important;
+}
+
+.w-28{
+  width: 28% !important;
+}

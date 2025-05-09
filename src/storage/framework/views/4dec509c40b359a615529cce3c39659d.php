@@ -10,9 +10,12 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+      
 
 <!-- Custom CSS -->
 <link href="<?php echo e(asset('css/custom.css')); ?>" rel="stylesheet">
+<?php echo app('Illuminate\Foundation\Vite')('resources/scss/custom.scss'); ?>
+
         <!-- Scripts -->
         <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
     </head>

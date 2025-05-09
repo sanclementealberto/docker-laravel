@@ -1,8 +1,9 @@
 <x-app-layout>
 
-    <h2 class="mt-4 container mx-auto ">Modificar cita</h2>
+    
 
     <div class="container mx-auto py-10 ">
+    <h1 class="alert alert-info w-15">Listado de Citas</h1>
         <div class="mx-auto">
             <div class=" bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
@@ -15,7 +16,7 @@
                         <input type="date" name="fecha" id="fecha" class="w-full border-gray-300 rounded-md shadow-sm
                         value={{ old('fecha', $cita->fecha) }}" required>
                         @error('fecha')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                        <p class="alert alert-danger text-sm">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="mb-4">
@@ -23,7 +24,7 @@
                         <input type="time" name="hora" id="hora" class="w-full border-gray-300 rounded-md shadow-sm
                         value={{ old('hora', $cita->hora) }}" required>
                         @error('hora')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                        <p class="alert alert-danger text-sm">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -35,7 +36,7 @@
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-outline-primary px-4 py-2 rounded-md">
+                    <button type="submit" class="btn btn-primary px-4 py-2 rounded-md">
                         {{ __('Actualizar') }}
                     </button>
                     </form>

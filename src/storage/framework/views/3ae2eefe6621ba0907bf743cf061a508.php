@@ -9,9 +9,10 @@
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
 
-    <h2 class="mt-4 container mx-auto ">Modificar cita</h2>
+    
 
     <div class="container mx-auto py-10 ">
+    <h1 class="alert alert-info w-15">Listado de Citas</h1>
         <div class="mx-auto">
             <div class=" bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
@@ -28,7 +29,7 @@ $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                        <p class="text-red-500 text-sm"><?php echo e($message); ?></p>
+                        <p class="alert alert-danger text-sm"><?php echo e($message); ?></p>
                         <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
@@ -43,7 +44,7 @@ $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                        <p class="text-red-500 text-sm"><?php echo e($message); ?></p>
+                        <p class="alert alert-danger text-sm"><?php echo e($message); ?></p>
                         <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
@@ -65,7 +66,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
-                    <button type="submit" class="btn btn-outline-primary px-4 py-2 rounded-md">
+                    <button type="submit" class="btn btn-primary px-4 py-2 rounded-md">
                         <?php echo e(__('Actualizar')); ?>
 
                     </button>

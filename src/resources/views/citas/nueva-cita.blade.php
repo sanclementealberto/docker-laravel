@@ -1,7 +1,7 @@
 <x-app-layout>
 
 <div class="container mx-auto mt-2">
-    <h2>Nueva Cita</h2>
+    <h2 class="alert alert-info w-8">Nueva Cita</h2>
 
 </div>
 
@@ -33,7 +33,7 @@
                             @enderror
                         </div>
                      
-                        <button type="submit" class="btn btn-outline-primary px-4 py-2 rounded-md">
+                        <button type="submit" class="btn btn-primary px-4 py-2 rounded-md">
                             {{ __('Guardar') }}
                         </button>
 

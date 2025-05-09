@@ -12,34 +12,34 @@
 
 
     <div class="container mx-auto mt-2">
-        <h1>Listado de Citas</h1>
+        <h1 class="alert alert-info w-15">Listado de Citas</h1>
         <?php if(session('success')): ?>
-            <div class="alert alert-success mx-auto">
-                <?php echo e(session('success')); ?>
+        <div class="alert alert-success mx-auto  ">
+            <?php echo e(session('success')); ?>
 
-            </div>
+        </div>
         <?php endif; ?>
 
         <?php if(session('error')): ?>
-            <div class="alert alert-danger mx-auto">
-                <?php echo e(session('error')); ?>
+        <div class="alert alert-danger  ">
+            <?php echo e(session('error')); ?>
 
-            </div>
+        </div>
         <?php endif; ?>
         <!-- solo el taller puede filtrar -->
         <?php if(auth()->user()->role === 'taller'): ?>
 
 
-            <form method="GET" action="<?php echo e(route('citas.filtrar')); ?>">
-                <label for="estado">Estado:</label>
-                <select name="estado" id="estado" onchange="this.form.submit()">
-                    <option value=""> Todas </option>
-                    <option value="sincita" <?php echo e(request('estado') == 'sincita' ? 'selected' : ''); ?>>Sin cita</option>
-                    <option value="concita" <?php echo e(request('estado') == 'concita' ? 'selected' : ''); ?>>Con cita</option>
-                </select>
-            </form>
+        <form method="GET" action="<?php echo e(route('citas.filtrar')); ?>">
+            <label for="estado">Estado:</label>
+            <select name="estado" id="estado" onchange="this.form.submit()">
+                <option value=""> Todas </option>
+                <option value="sincita" <?php echo e(request('estado') == 'sincita' ? 'selected' : ''); ?>>Sin cita</option>
+                <option value="concita" <?php echo e(request('estado') == 'concita' ? 'selected' : ''); ?>>Con cita</option>
+            </select>
+        </form>
         <?php endif; ?>
-        <table class="table mt-2 ">
+        <table class="table table-bordered  table-hover mt-2 ">
             <thead class="">
                 <tr>
                     <th>ID</th>
@@ -49,52 +49,71 @@
                     <th>fecha</th>
                     <th>Hora</th>
                     <th>duracion</th>
+
                     <?php if(auth()->user()->role === 'taller'): ?>
-                        <th>Acciones</th>
-                    <?php else: ?>
-                        <th></th>
+                    <th>Acciones</th>
                     <?php endif; ?>
-                </tr>
+
             </thead>
             <tbody>
-              
+
                 <?php if($citas->isEmpty()): ?>
-                    <tr>
-                        <td class="text-center" colspan="8">No hay citas</td>
-                    </tr>
+                <tr>
+                    <td class="text-center" colspan="8">No hay citas</td>
+                </tr>
                 <?php else: ?>
-                    <?php $__currentLoopData = $citas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cita): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <tr>
-                            <td><?php echo e($cita->id); ?></td>
-                            <td><?php echo e($cita->user->name); ?></td>
-                            <td><?php echo e($cita->modelo); ?></td>
-                            <td><?php echo e($cita->matricula); ?></td>
+                <?php $__currentLoopData = $citas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cita): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <tr>
+                    <td><?php echo e($cita->id); ?></td>
+                    <td><?php echo e($cita->user->name); ?></td>
+                    <td><?php echo e($cita->modelo); ?></td>
+                    <td><?php echo e($cita->matricula); ?></td>
 
 
-                            <td><?php echo e($cita->fecha); ?></td>
-                            <td><?php echo e($cita->hora); ?></td>
-                            <td><?php echo e($cita->duracion); ?></td>
+                    <td><?php echo e($cita->fecha); ?></td>
+                    <td><?php echo e($cita->hora); ?></td>
+                    <td><?php echo e($cita->duracion); ?></td>
 
-                            <td>
-                                <!--  //ademas oculto la vista para el rol cliente en html-->
-                                <?php if(auth()->user()->role === 'taller'): ?>
-                                    <a href="<?php echo e(route('citas.modificar-cita', $cita->id)); ?>" class="btn btn-sm btn-outline-success"
-                                        title="Editar">
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </a>
-                                    <form action="<?php echo e(route('citas.eliminar-cita', $cita->id)); ?>" method="POST" class="d-inline">
-                                        <?php echo csrf_field(); ?>
-                                        <?php echo method_field('DELETE'); ?>
-                                        <button type="submit" class="btn btn-sm btn-outline-danger"
-                                            onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita?')"
-                                            title="Eliminar">
-                                            <i class="bi bi-trash-fill"></i>
-                                        </button>
-                                    </form>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php if(auth()->user()->role === 'taller'): ?>
+                    <td>
+                        <a href="<?php echo e(route('citas.modificar-cita', $cita->id)); ?>" class="btn btn-sm btn-outline-success"
+                            title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <button type="button" class="btn btn-sm btn-outline-danger"
+                            data-bs-toggle="modal" data-bs-target="#modalEliminarCita<?php echo e($cita->id); ?>"
+                            title="Eliminar">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+
+                        <!-- modal eliminar -->
+                        <div class="modal fade" id="modalEliminarCita<?php echo e($cita->id); ?>" tabindex="-1" aria-labelledby="modalEliminarLabel<?php echo e($cita->id); ?>" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content border-danger">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-danger" id="modalEliminarLabel<?php echo e($cita->id); ?>">Confirmar eliminación</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Estas seguro de que quieres eliminar la cita ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+                                        
+                                        <form action="<?php echo e(route('citas.eliminar-cita', $cita->id)); ?>" method="POST" class="d-inline">
+                                            <?php echo csrf_field(); ?>
+                                            <?php echo method_field('DELETE'); ?>
+                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <?php endif; ?>
+                </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <?php endif; ?>
             </tbody>
 

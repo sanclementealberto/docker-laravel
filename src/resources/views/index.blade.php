@@ -5,7 +5,7 @@
                 <div class="p-6 text-gray-900">
                     {{ __("Bienvenido " . Auth::user()->name) }}
                     @if(session('error'))
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger w-28">
                             {{ session('error') }}
                         </div>
 
